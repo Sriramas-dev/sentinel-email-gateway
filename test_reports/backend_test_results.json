@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "total_tests": 10,
+    "passed_tests": 10,
+    "success_rate": 100.0,
+    "timestamp": "2026-01-04T15:27:58.785891"
+  },
+  "detailed_results": [
+    {
+      "test": "API Health Check",
+      "status": "PASS",
+      "details": "Status: 200, Message: S.E.N.T.I.N.E.L. API Active",
+      "timestamp": "2026-01-04T15:27:58.396187"
+    },
+    {
+      "test": "Email Analysis - Clean Email",
+      "status": "PASS",
+      "details": "ML Score: 0.369, Status: CLEAN",
+      "timestamp": "2026-01-04T15:27:58.440614"
+    },
+    {
+      "test": "Email Analysis - Phishing Email",
+      "status": "PASS",
+      "details": "ML Score: 0.653, Sandbox Score: 0.45, Status: SUSPICIOUS",
+      "timestamp": "2026-01-04T15:27:58.496966"
+    },
+    {
+      "test": "Get Emails List",
+      "status": "PASS",
+      "details": "Retrieved 4 emails",
+      "timestamp": "2026-01-04T15:27:58.534110"
+    },
+    {
+      "test": "Get Email by ID",
+      "status": "PASS",
+      "details": "Email ID: 25cfeba2-2b03-4fa1-85a2-315a69f1594a, Sandbox logs: 8",
+      "timestamp": "2026-01-04T15:27:58.579207"
+    },
+    {
+      "test": "Update Email Status",
+      "status": "PASS",
+      "details": "Updated to status: CLEAN",
+      "timestamp": "2026-01-04T15:27:58.621252"
+    },
+    {
+      "test": "Submit Feedback",
+      "status": "PASS",
+      "details": "Feedback submitted for email: 25cfeba2-2b03-4fa1-85a2-315a69f1594a",
+      "timestamp": "2026-01-04T15:27:58.662964"
+    },
+    {
+      "test": "Get Dashboard Stats",
+      "status": "PASS",
+      "details": "Total emails: 4, Model accuracy: 1.000",
+      "timestamp": "2026-01-04T15:27:58.706228"
+    },
+    {
+      "test": "Get Model Stats",
+      "status": "PASS",
+      "details": "Accuracy: 1.000, Version: 1",
+      "timestamp": "2026-01-04T15:27:58.742728"
+    },
+    {
+      "test": "Model Retrain - Insufficient Data",
+      "status": "PASS",
+      "details": "Correctly rejected - insufficient feedback data",
+      "timestamp": "2026-01-04T15:27:58.785111"
+    }
+  ]
+}
