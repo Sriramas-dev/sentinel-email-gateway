@@ -1,0 +1,138 @@
+{
+  "identity": {
+    "name": "S.E.N.T.I.N.E.L.",
+    "description": "Secure Email Network for Threat Identification & Neural Evaluation Logic",
+    "aesthetic": "Cyber-Ops Terminal",
+    "vibe": "Military-grade, High-Precision, Dark, Alert, Secure",
+    "target_audience": "SOC Analysts, Security Engineers"
+  },
+  "design_principles": [
+    "Fusion: Mix Military HUD precision with Modern SaaS usability",
+    "Emotion: Instill a sense of 'Control' and 'Vigilance'",
+    "Content: Data is the hero. Legibility of logs and scores is paramount",
+    "Zoom: High density for data, but clear focus on critical alerts",
+    "Contrast: High contrast for readability in dark environments (Cyber-Safety)"
+  ],
+  "typography": {
+    "fonts": {
+      "heading": "Chivo, sans-serif",
+      "body": "Inter, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "usage": {
+      "h1": "font-heading font-bold text-4xl tracking-tight uppercase",
+      "h2": "font-heading font-semibold text-2xl tracking-tight",
+      "body": "font-body text-base text-slate-300",
+      "data": "font-mono text-sm text-cyan-400",
+      "label": "font-mono text-xs uppercase tracking-widest text-slate-500"
+    },
+    "installation": "Import fonts via Google Fonts in index.css: @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');"
+  },
+  "colors": {
+    "palette": {
+      "background": "#020617",
+      "foreground": "#F8FAFC",
+      "primary": "#06B6D4",
+      "secondary": "#6366F1",
+      "accent": "#F59E0B",
+      "destructive": "#EF4444",
+      "muted": "#1E293B",
+      "border": "#1E293B"
+    },
+    "css_variables": {
+      "root": {
+        "--background": "222 47% 11%",
+        "--foreground": "210 40% 98%",
+        "--card": "222 47% 11%",
+        "--card-foreground": "210 40% 98%",
+        "--popover": "222 47% 11%",
+        "--popover-foreground": "210 40% 98%",
+        "--primary": "189 94% 43%",
+        "--primary-foreground": "222 47% 11%",
+        "--secondary": "243 75% 59%",
+        "--secondary-foreground": "210 40% 98%",
+        "--muted": "217 33% 17%",
+        "--muted-foreground": "215 20% 65%",
+        "--accent": "217 33% 17%",
+        "--accent-foreground": "210 40% 98%",
+        "--destructive": "0 84% 60%",
+        "--destructive-foreground": "210 40% 98%",
+        "--border": "217 33% 17%",
+        "--input": "217 33% 17%",
+        "--ring": "189 94% 43%",
+        "--radius": "0.25rem"
+      }
+    },
+    "usage_rules": [
+      "Backgrounds must be deep navy/slate (Slate 950), never pure black unless for terminal windows.",
+      "Use Cyan (Cyan 500) for 'Safe' or 'System Normal' indicators.",
+      "Use Purple (Indigo 500) for 'AI/Neural' related elements (scores, analysis).",
+      "Use Red (Red 500) strictly for 'Threats' and 'Quarantine'.",
+      "Use Amber (Amber 500) for 'Warnings' or 'Suspicious' (0.5-0.85 score)."
+    ]
+  },
+  "layout": {
+    "grid_system": "Control Room Grid",
+    "spacing": "Generous padding (p-6, p-8) inside containers, tight gaps (gap-4) between data panels.",
+    "modes": {
+      "dashboard": "grid grid-cols-1 md:grid-cols-4 gap-6",
+      "detail_view": "grid grid-cols-1 md:grid-cols-12 gap-8"
+    },
+    "containers": {
+      "card": "bg-slate-950/50 backdrop-blur-md border border-slate-800/60 shadow-lg",
+      "terminal": "bg-black border border-slate-800 font-mono text-sm p-4 overflow-y-auto custom-scrollbar"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-cyan-600 hover:bg-cyan-500 text-white font-mono uppercase tracking-wider text-xs rounded-sm shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-all",
+      "destructive": "bg-red-600 hover:bg-red-500 text-white font-mono uppercase tracking-wider text-xs rounded-sm shadow-[0_0_10px_rgba(239,68,68,0.5)]",
+      "outline": "border border-slate-700 hover:border-cyan-500 text-slate-300 hover:text-cyan-400 bg-transparent font-mono uppercase text-xs rounded-sm"
+    },
+    "inputs": "bg-slate-900/50 border-slate-700 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-200 font-mono rounded-sm placeholder:text-slate-600",
+    "cards": "rounded-sm border border-slate-800 bg-slate-950/40 backdrop-blur-sm",
+    "badges": {
+      "safe": "bg-cyan-950/30 text-cyan-400 border border-cyan-900/50",
+      "suspicious": "bg-amber-950/30 text-amber-400 border border-amber-900/50",
+      "malicious": "bg-red-950/30 text-red-400 border border-red-900/50"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": "Use 'backdrop-blur-md' and 'bg-opacity-50' for panels to show depth.",
+    "borders": "1px borders are mandatory for all containers. Use 'border-slate-800' as default.",
+    "glows": "Use subtle drop shadows with colors for active states: 'shadow-[0_0_15px_rgba(6,182,212,0.15)]'.",
+    "scanlines": "Optional: Add a subtle scanline overlay on the terminal window using CSS gradients."
+  },
+  "assets": {
+    "images": {
+      "background_abstract": "https://images.unsplash.com/photo-1719702703328-87e335030324?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "server_room": "https://images.unsplash.com/photo-1645477704075-cb3d14b349ee?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "login_bg": "https://images.unsplash.com/photo-1719702703328-87e335030324?crop=entropy&cs=srgb&fm=jpg&q=85"
+    },
+    "icons": "Use 'lucide-react'. Preferred icons: Shield, Lock, Activity, Terminal, AlertTriangle, Eye, Server, Cpu, Network."
+  },
+  "instructions_to_main_agent": [
+    "1. INSTALL DEPENDENCIES: Run 'yarn add recharts' immediately. The dashboard requires charts.",
+    "2. UPDATE CSS: Replace the content of '/app/frontend/src/index.css' with the CSS variables provided in the 'colors' section. Ensure you keep the @tailwind directives.",
+    "3. UPDATE TAILWIND: Update '/app/frontend/tailwind.config.js' to extend the font family with Chivo, Inter, and JetBrains Mono.",
+    "4. FILE EXTENSIONS: Use '.js' or '.jsx' for all React files. Do NOT use '.tsx'.",
+    "5. LAYOUT: Implement the 'Control Room' grid for the main dashboard. Use the 'terminal' style for the Live Monitor.",
+    "6. CHARTS: Use 'recharts' for the Threat Statistics. Style them to match the dark theme (no white backgrounds).",
+    "7. MOCK DATA: Since the backend might not be ready, create a 'mockData.js' file to populate the dashboard with realistic cyber-threat data.",
+    "8. NAVIGATION: Create a sidebar navigation with the following links: Dashboard, Email Scanner, Live Monitor, Quarantine, Analytics, Config, Training.",
+    "9. TEST IDS: Add 'data-testid' to all interactive elements (buttons, inputs, nav links)."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts. Use the 'Control Room' grid.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: 'transition: all'.",
+    "You MUST NOT center align the app container.",
+    "Always use modern button styles (sharp corners for this project).",
+    "NEVER use AI assistant Emoji characters.",
+    "Every interaction needs micro-animations.",
+    "Use 2-3x more spacing than feels comfortable inside containers, but keep the grid tight.",
+    "Use 'sonner' for toasts."
+  ]
+}
