@@ -20,16 +20,24 @@ The system combines Natural Language Processing (NLP) with behavioral sandbox an
 
 ## 🏗️ System Architecture
 
+```
 Frontend (React + CRACO)
-↓
+        ↓
 REST API Communication (HTTP)
-↓
+        ↓
 Backend (FastAPI)
-├── NLP ML Model (ml_model.py)
-├── Sandbox Simulator (sandbox_simulator.py)
-├── Database Layer (SQLite)
-└── Decision Engine
+        ├── NLP ML Model (ml_model.py)
+        ├── Sandbox Simulator (sandbox_simulator.py)
+        ├── Database Layer (SQLite)
+        └── Decision Engine
+```
 
+## 📁 Project Structure
+
+backend/ → FastAPI backend  
+frontend/ → React dashboard  
+models/ → trained ML models  
+tests/ → testing scripts  
 ---
 
 ## ⚙️ Tech Stack
