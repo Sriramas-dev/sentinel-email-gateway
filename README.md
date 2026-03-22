@@ -19,3 +19,43 @@ The system combines Natural Language Processing (NLP) with behavioral sandbox an
 ---
 
 ## 🏗️ System Architecture
+
+Frontend (React + CRACO)
+↓
+REST API Communication (HTTP)
+↓
+Backend (FastAPI)
+├── NLP ML Model (ml_model.py)
+├── Sandbox Simulator (sandbox_simulator.py)
+├── Database Layer (SQLite)
+└── Decision Engine
+
+---
+
+## ⚙️ Tech Stack
+
+**Frontend**
+- React
+- CRACO
+- Tailwind CSS
+
+**Backend**
+- Python
+- FastAPI
+- Uvicorn
+
+**Machine Learning**
+- Scikit-learn
+- NLP (TF-IDF based classification)
+
+**Database**
+- SQLite
+
+---
+
+## 📦 Installation & Setup
+
+### 1. Clone Repository
+```bash
+git clone https://github.com/Sriramas-dev/sentinel-email-gateway.git
+cd sentinel-email-gateway
