@@ -118,13 +118,16 @@ python backend_test.py
 pytest -q
 ```
 
-## UI Preview Placeholders
+## UI Preview
 
-Add screenshots to a `docs/screenshots/` folder and update links below:
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
 
-- Dashboard: `docs/screenshots/dashboard.png`
-- Email Scanner: `docs/screenshots/email-scanner.png`
-- Quarantine View: `docs/screenshots/quarantine.png`
+### Email Scanner
+![Email Scanner](docs/screenshots/email-scanner.png)
+
+### Quarantine View
+![Quarantine View](docs/screenshots/quarantine.png)
 
 ## Tech Stack
 
