@@ -1,11 +1,11 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 import os
 import logging
 from pathlib import Path
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
@@ -19,28 +19,47 @@ from database import (
     get_email_by_id, get_sandbox_logs, update_email_status,
     save_feedback, get_all_feedback, get_stats
 )
+from validation import normalize_status
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 init_db()
 
-app = FastAPI()
+app = FastAPI(
+    title="SENTINEL API",
+    version="1.0.0",
+    description="Gateway-level phishing detection and quarantine API.",
+)
 api_router = APIRouter(prefix="/api")
 
+# API routes remain under /api for frontend compatibility.
+
 class EmailInput(BaseModel):
-    subject: str
-    body: str
-    sender: str
-    recipient: Optional[str] = None
+    subject: str = Field(..., min_length=1, max_length=255)
+    body: str = Field(..., min_length=1)
+    sender: str = Field(..., min_length=3, max_length=255)
+    recipient: Optional[str] = Field(default=None, max_length=255)
+
+    @field_validator("subject", "body", "sender", "recipient")
+    @classmethod
+    def strip_text_fields(cls, value):
+        if value is None:
+            return value
+        return value.strip()
 
 class EmailStatusUpdate(BaseModel):
     status: str
 
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, value):
+        return normalize_status(value)
+
 class FeedbackInput(BaseModel):
     email_id: str
     is_phishing: bool
-    admin_notes: Optional[str] = ''
+    admin_notes: Optional[str] = Field(default="", max_length=1000)
 
 @api_router.get("/")
 async def root():
@@ -99,17 +118,17 @@ async def analyze_email(email: EmailInput):
     
     except Exception as e:
         logging.error(f"Error analyzing email: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to analyze email")
 
 @api_router.get("/emails")
-async def list_emails(limit: int = 100):
+async def list_emails(limit: int = Query(default=100, ge=1, le=500)):
     """List all emails"""
     try:
         emails = get_all_emails(limit)
         return {'emails': emails, 'count': len(emails)}
     except Exception as e:
         logging.error(f"Error fetching emails: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to fetch emails")
 
 @api_router.get("/emails/{email_id}")
 async def get_email(email_id: str):
@@ -129,7 +148,7 @@ async def get_email(email_id: str):
         raise
     except Exception as e:
         logging.error(f"Error fetching email: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to fetch email details")
 
 @api_router.patch("/emails/{email_id}/status")
 async def update_status(email_id: str, update: EmailStatusUpdate):
@@ -146,7 +165,7 @@ async def update_status(email_id: str, update: EmailStatusUpdate):
         raise
     except Exception as e:
         logging.error(f"Error updating status: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to update email status")
 
 @api_router.post("/feedback")
 async def submit_feedback(feedback: FeedbackInput):
@@ -163,7 +182,7 @@ async def submit_feedback(feedback: FeedbackInput):
         raise
     except Exception as e:
         logging.error(f"Error saving feedback: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to save feedback")
 
 @api_router.post("/model/retrain")
 async def retrain_model():
@@ -189,7 +208,7 @@ async def retrain_model():
         raise
     except Exception as e:
         logging.error(f"Error retraining model: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to retrain model")
 
 @api_router.get("/model/stats")
 async def model_stats():
@@ -199,7 +218,7 @@ async def model_stats():
         return stats
     except Exception as e:
         logging.error(f"Error fetching model stats: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to fetch model stats")
 
 @api_router.get("/stats")
 async def dashboard_stats():
@@ -214,7 +233,7 @@ async def dashboard_stats():
         }
     except Exception as e:
         logging.error(f"Error fetching stats: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to fetch dashboard stats")
 
 @api_router.get("/sandbox/live")
 async def live_sandbox_stream():

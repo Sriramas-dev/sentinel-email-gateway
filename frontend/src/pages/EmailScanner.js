@@ -17,19 +17,30 @@ const EmailScanner = () => {
   });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setResult(null);
+    setErrorMessage('');
 
     try {
-      const response = await axios.post(`${API}/email/analyze`, formData);
+      const payload = {
+        subject: formData.subject.trim(),
+        body: formData.body.trim(),
+        sender: formData.sender.trim(),
+        recipient: formData.recipient.trim(),
+      };
+      const response = await axios.post(`${API}/email/analyze`, payload);
       setResult(response.data);
       toast.success('Email analysis complete!');
     } catch (error) {
       console.error('Error analyzing email:', error);
-      toast.error('Failed to analyze email');
+      const apiMessage = error?.response?.data?.detail;
+      const message = apiMessage || 'Failed to analyze email';
+      setErrorMessage(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -50,6 +61,11 @@ const EmailScanner = () => {
             Email Input
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {errorMessage && (
+              <div className="rounded-sm border border-red-900/60 bg-red-950/20 p-3">
+                <p className="font-mono text-xs text-red-300">{errorMessage}</p>
+              </div>
+            )}
             <div>
               <label className="font-mono text-xs uppercase tracking-widest text-slate-500 block mb-2">
                 Sender Email

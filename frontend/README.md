@@ -1,5 +1,11 @@
 # Getting Started with Create React App
 
+## SENTINEL Frontend Notes
+
+- Copy `.env.example` to `.env` and set `REACT_APP_BACKEND_URL`.
+- Start the dev server with `yarn start`.
+- The dashboard polls backend stats every 10 seconds for live updates.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

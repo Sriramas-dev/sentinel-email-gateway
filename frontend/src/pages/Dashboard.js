@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [recentEmails, setRecentEmails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchDashboardData();
@@ -20,6 +21,7 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
+      setError('');
       const [statsRes, emailsRes] = await Promise.all([
         axios.get(`${API}/stats`),
         axios.get(`${API}/emails?limit=10`),
@@ -29,6 +31,7 @@ const Dashboard = () => {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      setError('Unable to load dashboard data. Please retry in a few seconds.');
       setLoading(false);
     }
   };
@@ -37,6 +40,16 @@ const Dashboard = () => {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-cyan-400 font-mono">LOADING DASHBOARD...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-8" data-testid="dashboard-page">
+        <div className="border border-red-900/60 bg-red-950/20 rounded-sm p-4">
+          <p className="font-mono text-sm text-red-300">{error}</p>
+        </div>
       </div>
     );
   }
@@ -115,36 +128,42 @@ const Dashboard = () => {
           <h2 className="font-heading font-semibold text-xl text-slate-100 mb-4 uppercase">
             Recent Scans
           </h2>
-          <div className="space-y-3">
-            {recentEmails.slice(0, 5).map((email) => (
-              <div
-                key={email.id}
-                className="flex items-center justify-between p-3 bg-slate-900/50 rounded-sm border border-slate-800"
-              >
-                <div className="flex-1 min-w-0">
-                  <p className="font-mono text-sm text-slate-300 truncate">{email.subject}</p>
-                  <p className="font-mono text-xs text-slate-500 mt-1">{email.sender}</p>
+          {recentEmails.length === 0 ? (
+            <div className="rounded-sm border border-slate-800 bg-slate-900/40 p-4">
+              <p className="font-mono text-xs text-slate-500">No scans yet. Analyze an email to populate this list.</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {recentEmails.slice(0, 5).map((email) => (
+                <div
+                  key={email.id}
+                  className="flex items-center justify-between p-3 bg-slate-900/50 rounded-sm border border-slate-800"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="font-mono text-sm text-slate-300 truncate">{email.subject}</p>
+                    <p className="font-mono text-xs text-slate-500 mt-1">{email.sender}</p>
+                  </div>
+                  <div className="ml-4">
+                    {email.status === 'CLEAN' && (
+                      <span className="inline-flex items-center gap-1 font-mono text-xs text-cyan-400 bg-cyan-950/30 px-2 py-1 rounded-sm border border-cyan-900/50">
+                        <CheckCircle size={14} /> CLEAN
+                      </span>
+                    )}
+                    {email.status === 'SUSPICIOUS' && (
+                      <span className="inline-flex items-center gap-1 font-mono text-xs text-amber-400 bg-amber-950/30 px-2 py-1 rounded-sm border border-amber-900/50">
+                        <AlertTriangle size={14} /> SUSPICIOUS
+                      </span>
+                    )}
+                    {email.status === 'QUARANTINE' && (
+                      <span className="inline-flex items-center gap-1 font-mono text-xs text-red-400 bg-red-950/30 px-2 py-1 rounded-sm border border-red-900/50">
+                        <Shield size={14} /> QUARANTINE
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <div className="ml-4">
-                  {email.status === 'CLEAN' && (
-                    <span className="inline-flex items-center gap-1 font-mono text-xs text-cyan-400 bg-cyan-950/30 px-2 py-1 rounded-sm border border-cyan-900/50">
-                      <CheckCircle size={14} /> CLEAN
-                    </span>
-                  )}
-                  {email.status === 'SUSPICIOUS' && (
-                    <span className="inline-flex items-center gap-1 font-mono text-xs text-amber-400 bg-amber-950/30 px-2 py-1 rounded-sm border border-amber-900/50">
-                      <AlertTriangle size={14} /> SUSPICIOUS
-                    </span>
-                  )}
-                  {email.status === 'QUARANTINE' && (
-                    <span className="inline-flex items-center gap-1 font-mono text-xs text-red-400 bg-red-950/30 px-2 py-1 rounded-sm border border-red-900/50">
-                      <Shield size={14} /> QUARANTINE
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
