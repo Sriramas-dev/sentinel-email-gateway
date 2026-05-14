@@ -167,6 +167,36 @@ async def update_status(email_id: str, update: EmailStatusUpdate):
         logging.error(f"Error updating status: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to update email status")
 
+@api_router.delete("/emails/{email_id}")
+async def delete_email(email_id: str):
+    """Delete email by ID"""
+    try:
+        email = get_email_by_id(email_id)
+
+        if not email:
+            raise HTTPException(status_code=404, detail="Email not found")
+
+        import sqlite3
+
+        conn = sqlite3.connect("sentinel.db")
+        cursor = conn.cursor()
+
+        cursor.execute("DELETE FROM emails WHERE id = ?", (email_id,))
+        conn.commit()
+        conn.close()
+
+        return {
+            "message": "Email deleted successfully",
+            "email_id": email_id
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        logging.error(f"Error deleting email: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to delete email")
+
 @api_router.post("/feedback")
 async def submit_feedback(feedback: FeedbackInput):
     """Submit admin feedback for model training"""

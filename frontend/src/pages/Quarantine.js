@@ -40,11 +40,15 @@ const Quarantine = () => {
 
   const handleDelete = async (emailId) => {
     try {
-      await axios.patch(`${API}/emails/${emailId}/status`, { status: 'DELETED' });
+      await axios.delete(`${API}/emails/${emailId}`);
+  
       toast.success('Email permanently deleted');
+  
       fetchQuarantinedEmails();
+  
     } catch (error) {
       console.error('Error deleting email:', error);
+  
       toast.error('Failed to delete email');
     }
   };
